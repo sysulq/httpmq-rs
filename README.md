@@ -5,6 +5,8 @@ httpmq-rs
 Benchmark
 ---
 
+Also, you can refer to [github.com/hnlq715/httpmq#benchmark](https://github.com/hnlq715/httpmq#benchmark) for the benchmark of **Golang** implementation.
+
 Test machine(Hackintosh):
 
 ```text
