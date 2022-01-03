@@ -1,11 +1,10 @@
 use axum::{error_handling::HandleErrorLayer, routing::get, Router};
 use clap::{App, Arg};
 
-use std::{net::SocketAddr, sync::RwLock, time::Duration};
+use std::{net::SocketAddr, time::Duration};
 use tower::ServiceBuilder;
-use tower_http::add_extension::AddExtensionLayer;
 
-use httpmq_rs::service::{handle_error, process, SharedState, State, DEFAULT_MAX_QUEUE_CELL};
+use httpmq_rs::service::{handle_error, init, process};
 
 #[tokio::main]
 async fn main() {
@@ -14,8 +13,6 @@ async fn main() {
         std::env::set_var("RUST_LOG", "httpmq-rs=debug,tower_http=debug")
     }
     tracing_subscriber::fmt::init();
-
-    let state = SharedState::new(RwLock::new(State::new()));
 
     let matches = App::new("httpmq-rs")
         .bin_name("httpmq-rs")
@@ -26,16 +23,7 @@ async fn main() {
         )
         .get_matches();
 
-    DEFAULT_MAX_QUEUE_CELL
-        .set(
-            matches
-                .value_of("maxqueue")
-                .unwrap()
-                .parse::<i32>()
-                .unwrap(),
-        )
-        .unwrap();
-
+    init(matches);
     // Build our application by composing routes
     let app = Router::new()
         .route("/", get(process))
@@ -48,7 +36,7 @@ async fn main() {
                 .concurrency_limit(1024)
                 .timeout(Duration::from_secs(10))
                 // .layer(TraceLayer::new_for_http())
-                .layer(AddExtensionLayer::new(state))
+                // .layer(AddExtensionLayer::new(state))
                 .into_inner(),
         );
 
