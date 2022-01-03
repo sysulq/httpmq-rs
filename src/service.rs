@@ -1,6 +1,6 @@
 use axum::{extract::Extension, extract::Query, http::StatusCode, response::IntoResponse};
 use once_cell::sync::OnceCell;
-use rocksdb::DB;
+use rocksdb::{WriteBatch, DB};
 use serde::Deserialize;
 use std::{
     borrow::Cow,
@@ -88,9 +88,6 @@ fn httpmq_now_putpos(db: &rocksdb::DB, name: &String) -> Option<i32> {
 
     debug!("newpos {} {:?}", newpos, metadata);
 
-    db.put(name.to_string() + ".putpos", newpos.to_string())
-        .unwrap();
-
     Some(newpos)
 }
 
@@ -166,9 +163,13 @@ async fn kv_set(
 
     if putpos > 0 {
         let queue_name = args.name.to_string() + &putpos.to_string();
+
         let data = args.data.unwrap_or("".to_string());
         if data.len() > 0 {
-            db.put(queue_name, data).unwrap();
+            let mut batch = WriteBatch::default();
+            batch.put(args.name.to_string() + ".putpos", putpos.to_string());
+            batch.put(queue_name, data);
+            db.write(batch).unwrap();
             return Ok(String::from("HTTPMQ_PUT_OK"));
         }
         Ok(String::from("HTTPMQ_PUT_NO_DATA"))

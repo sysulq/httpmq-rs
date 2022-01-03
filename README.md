@@ -1,5 +1,6 @@
 httpmq-rs
 ===
+
 [![Rust](https://github.com/hnlq715/httpmq-rs/actions/workflows/rust.yml/badge.svg)](https://github.com/hnlq715/httpmq-rs/actions/workflows/rust.yml)
 
 Benchmark
@@ -36,13 +37,11 @@ wrk -c 10 -t 2 -d 10s "http://127.0.0.1:1218/?name=xoyo&opt=put&data=aaaaaaaaaaa
 Running 10s test @ http://127.0.0.1:1218/?name=xoyo&opt=put&data=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   2 threads and 10 connections
   Thread Stats   Avg      Stdev     Max   +/- Stdev
-    Latency   185.78us  163.52us   9.86ms   99.45%
-    Req/Sec    26.82k     1.09k   29.17k    64.85%
-  539029 requests in 10.10s, 76.08MB read
-Requests/sec:  53370.23
-Transfer/sec:      7.53MB
-
-
+    Latency   139.45us  150.62us   9.51ms   99.34%
+    Req/Sec    36.01k     1.56k   39.42k    71.78%
+  723434 requests in 10.10s, 89.69MB read
+Requests/sec:  71629.07
+Transfer/sec:      8.88MB
 ```
 
 GET
