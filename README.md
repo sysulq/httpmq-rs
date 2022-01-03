@@ -58,3 +58,14 @@ Running 10s test @ http://127.0.0.1:1218/?name=xoyo&opt=get
 Requests/sec:  73034.96
 Transfer/sec:     45.20MB
 ```
+
+Flamegraph
+---
+
+PUT
+
+![flamegraph_put](./flamegraph_put.svg)
+
+GET
+
+![flamegraph_get](./flamegraph_get.svg)
